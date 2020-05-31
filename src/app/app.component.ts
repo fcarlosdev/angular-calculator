@@ -1,10 +1,43 @@
 import { Component } from '@angular/core';
+import { CalculatorService } from './services/calculator.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'angular-calculator';
+	title = 'Angular Calculator Example';
+	currentNumber = '0';
+	operation = '';
+
+	constructor() {}
+
+	getOperation(op: string) {
+		this.operation = op;
+		this.currentNumber += op;
+	}
+
+	getNumber(number: string) {
+		if (this.currentNumber === '0') {
+			this.currentNumber = number;
+		} else {
+			this.currentNumber += number;
+		}
+	}
+
+	addDecimalPoint() {
+		this.currentNumber += '.';
+	}
+
+	calc() {
+		let result = eval(this.currentNumber);
+		this.currentNumber = (this.currentNumber.includes('.'))?
+			String(result.toFixed(2)) : String(result);
+	}
+
+	clearAll() {
+		this.currentNumber = '0';
+		this.operation = '';
+	}
 }
